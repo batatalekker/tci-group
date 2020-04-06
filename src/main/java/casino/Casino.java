@@ -8,7 +8,7 @@ import casino.game.IGame;
 import java.util.List;
 
 public class Casino implements ICasino{
-    private List<Game> games;
+    List<Game> games;
 
     @Override
     public void addGame(String gameName, IGame gameToAdd) {
