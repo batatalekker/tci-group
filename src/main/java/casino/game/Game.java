@@ -11,6 +11,19 @@ import java.util.Random;
 public class Game implements IGame {
     private Set<Bet> BetMade = new HashSet<>();
     private GameRule rule;
+    String gameName;
+
+    public Game(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
 
     @Override
     public void startBettingRound() {

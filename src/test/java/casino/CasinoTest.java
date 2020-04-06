@@ -17,7 +17,7 @@ public class CasinoTest {
     public void addGameShouldAddGameToCasino() {
         //arrange
         String gameName = "Best game";
-        Game bestGame = new Game();
+        Game bestGame = new Game(gameName);
         Casino casino = new Casino();
 
         //act
@@ -32,8 +32,8 @@ public class CasinoTest {
     public void getGameShouldReturnGameFromCasino() {
         //arrange
         Casino casino = new Casino();
-        Game bestGame = new Game();
         String gameName = "new game";
+        Game bestGame = new Game(gameName);
 
         //act
         casino.addGame(gameName, bestGame);
