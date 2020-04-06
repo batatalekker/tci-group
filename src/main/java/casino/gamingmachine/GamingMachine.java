@@ -15,7 +15,17 @@ import java.util.Set;
 public class GamingMachine implements IGamingMachine {
 
     private GamingMachineID gamingMachineID;
+
+    public IPlayerCard getCurrentPlayer() {
+        return currentPlayer;
+    }
+
     private IPlayerCard currentPlayer;
+
+    public Set<Bet> getBets() {
+        return bets;
+    }
+
     private Set<Bet> bets;
     private BettingRound bettingRound;
 
