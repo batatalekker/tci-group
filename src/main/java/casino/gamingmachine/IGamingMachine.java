@@ -2,6 +2,7 @@ package casino.gamingmachine;
 
 import casino.bet.BetResult;
 import casino.cashier.IPlayerCard;
+import casino.idfactory.GamingMachineID;
 
 public interface IGamingMachine {
     /**
