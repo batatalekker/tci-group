@@ -23,7 +23,7 @@ public class GamingMachine implements IGamingMachine {
     private IPlayerCard currentPlayer;
 
     public Set<Bet> getBets() {
-        return bets;
+        return this.bettingRound.getAllBetsMade();
     }
 
     private Set<Bet> bets;
@@ -57,7 +57,7 @@ public class GamingMachine implements IGamingMachine {
 
         //clear
         currentPlayer = null;
-        bets = new HashSet<>();
+        this.bettingRound=new BettingRound();
     }
 
     @Override

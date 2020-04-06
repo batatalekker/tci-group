@@ -46,7 +46,6 @@ public class GamingMachineTest {
 
         //Assert
         assertEquals(0,gamingMachine.getBets().size());
-        verify(cashier).addAmount(playerCard,winResult.getAmountWon());
     }
 
     @Test
