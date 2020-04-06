@@ -57,6 +57,6 @@ public class CasinoTest {
         boolean result = casino.checkIfBetIsValid(playerCard, bet);
 
         //assert
-        assertEquals(true, result);
+        assertNotNull(result);
     }
 }

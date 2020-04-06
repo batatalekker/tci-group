@@ -28,7 +28,7 @@ public class GameTest {
     @Test
     public void TestAcceptBet() throws NoCurrentRoundException, NoPlayerCardException {
         //arrange
-        Game game = new Game();
+        Game game = new Game("game");
         Bet bet = mock(Bet.class);
         MoneyAmount moneyAmount = mock(MoneyAmount.class);
         GamingMachine gamingMachine = mock(GamingMachine.class);
@@ -46,7 +46,7 @@ public class GameTest {
     @Test
     public void acceptBetTest_WhenGamingMachineFailedPlacingBet() throws NoPlayerCardException, NoCurrentRoundException{
         //arrange
-        Game game = new Game();
+        Game game = new Game("game");
         Bet bet = mock(Bet.class);
         MoneyAmount moneyAmount = mock(MoneyAmount.class);
         GamingMachine gamingMachine = mock(GamingMachine.class);

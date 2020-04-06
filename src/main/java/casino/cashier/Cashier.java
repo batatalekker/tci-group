@@ -11,6 +11,9 @@ import java.util.Set;
 public class Cashier implements ICashier {
     private Set<IPlayerCard> playercards;
 
+    public Set<IPlayerCard> getPlayercards() {
+        return playercards;
+    }
 
     public Cashier(){
         this.playercards = new HashSet<>();
