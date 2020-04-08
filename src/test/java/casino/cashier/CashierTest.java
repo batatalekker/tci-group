@@ -8,13 +8,12 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class CashierTest {
 
-    private static final MoneyAmount VALID_MONEY = new MoneyAmount(500);
+    private static final MoneyAmount BET_COST = new MoneyAmount(100);
     private static final BetID VALID_BETID = new BetID("12345");
     private static final MoneyAmount INVALID_MONEY = new MoneyAmount(-50);
 
@@ -75,8 +74,8 @@ public class CashierTest {
         //arrange
         Cashier cashier = new Cashier();
         PlayerCard card = new PlayerCard();
-        card.setBalance(invalidMoneyAmountOnCard);
-        Bet bet = new Bet(VALID_BETID, VALID_MONEY);
+        Bet bet = new Bet(VALID_BETID, BET_COST);
+        cashier.addAmount(card, invalidMoneyAmountOnCard);
 
         //act
         cashier.checkIfBetIsValid(card, bet);
@@ -85,13 +84,27 @@ public class CashierTest {
 
     }
 
+    //Implemented by Joe 08/04/2020
+    //
     @Test
-    public void checkIfBetIsValidShouldSubstractAmountFromCardIfSuccesfull() {
+    @Parameters(method = "getValidMoney")
+    public void checkIfBetIsValidShouldReturnTrueIfBetIsValid(MoneyAmount validMoneyAmount) throws BetNotExceptedException {
+        //arrange
+        Cashier cashier = new Cashier();
+        PlayerCard card = new PlayerCard();
+        Bet bet = new Bet(VALID_BETID, BET_COST);
+        cashier.addAmount(card, validMoneyAmount);
 
+        //act
+        boolean result = cashier.checkIfBetIsValid(card, bet);
+
+        //assert
+        assertTrue(result);
+        assertEquals((validMoneyAmount.getAmountInCents()- bet.getMoneyAmount().getAmountInCents()), card.getBalance().getAmountInCents());
     }
 
 
-    //Implemented by Joe
+    //Implemented by Joe 08/04/2020
     //validates indirect output
     @Test
     @Parameters(method = "getValidMoney")

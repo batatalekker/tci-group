@@ -29,7 +29,9 @@ public class Cashier implements ICashier {
 
     @Override
     public void returnGamblerCard(IPlayerCard card) {
-        playercards.remove(card);
+        this.betIDS = card.returnBetIDsAndClearCard();
+        ((PlayerCard)card).setBalance(new MoneyAmount(0));
+        this.playercards.remove(card);
     }
 
     @Override

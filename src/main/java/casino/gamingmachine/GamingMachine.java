@@ -3,6 +3,7 @@ package casino.gamingmachine;
 import casino.bet.Bet;
 import casino.bet.BetResult;
 import casino.bet.MoneyAmount;
+import casino.cashier.Cashier;
 import casino.cashier.IPlayerCard;
 import casino.game.BettingRound;
 import casino.idfactory.BetID;
@@ -15,6 +16,7 @@ import java.util.Set;
 public class GamingMachine implements IGamingMachine {
 
     private GamingMachineID gamingMachineID;
+    private Cashier cashier;
 
     public IPlayerCard getCurrentPlayer() {
         return currentPlayer;
@@ -29,10 +31,11 @@ public class GamingMachine implements IGamingMachine {
     private Set<Bet> bets;
     private BettingRound bettingRound;
 
-    public GamingMachine(){
+    public GamingMachine(Cashier cashier){
         this.gamingMachineID = new GamingMachineID(IDFactory.GenerateID("GamingMachine"));
         this.currentPlayer = null;
         bets = new HashSet<>();
+        this.cashier = cashier;
     }
 
     public BettingRound getBettingRound() {
@@ -51,13 +54,20 @@ public class GamingMachine implements IGamingMachine {
         return false;
     }
 
+    //Remade by Joe
     @Override
     public void acceptWinner(BetResult winResult) {
-        //accept
+        Bet winningBet = winResult.getWinningBet();
+        Set<BetID> temp = currentPlayer.returnBetIDs();
+        for (BetID i: temp ) {
+            if (i == winningBet.getBetID()) {
+                cashier.addAmount(currentPlayer, winResult.getAmountWon());
+            }
+        }
 
         //clear
         currentPlayer = null;
-        this.bettingRound=new BettingRound();
+        this.bettingRound = new BettingRound();
     }
 
     @Override

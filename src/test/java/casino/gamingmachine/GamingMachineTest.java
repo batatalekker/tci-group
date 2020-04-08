@@ -17,7 +17,8 @@ public class GamingMachineTest {
     @Test
     public void TestPlaceBet() throws NoPlayerCardException {
         //Arrange
-        GamingMachine gamingMachine = new GamingMachine();
+        Cashier cashier = mock(Cashier.class);
+        GamingMachine gamingMachine = new GamingMachine(cashier);
         PlayerCard playerCard = mock(PlayerCard.class);
         gamingMachine.connectCard(playerCard);
         when(((PlayerCard)playerCard).getBalance()).thenReturn(new MoneyAmount((150)));
@@ -28,30 +29,31 @@ public class GamingMachineTest {
         assertTrue(success);
     }
 
+    //Re-done by Joe
     @Test
-    public void TestAcceptWinner() throws  NoPlayerCardException {
+    public void TestAcceptWinnerShouldClearAllBetsOnMachineAndUpdateBalance() throws NoPlayerCardException {
         //Arrange
         Cashier cashier = mock(Cashier.class);
-        GamingMachine gamingMachine = new GamingMachine();
+        GamingMachine gamingMachine = new GamingMachine(cashier);
         BetResult winResult = mock(BetResult.class);
         PlayerCard playerCard = mock(PlayerCard.class);
+        gamingMachine.connectCard(playerCard);
 
         //Act
-        gamingMachine.connectCard(playerCard);
-        gamingMachine.placeBet(421);
-        gamingMachine.placeBet(22);
-        gamingMachine.placeBet(323);
+        gamingMachine.placeBet(100);
         gamingMachine.acceptWinner(winResult);
 
 
         //Assert
         assertEquals(0,gamingMachine.getBets().size());
+        assertEquals(winResult.getAmountWon(), playerCard.getBalance());
     }
 
     @Test
     public void connectCardTest() {
         //Arrange
-        GamingMachine gamingMachine = new GamingMachine();
+        Cashier cashier = new Cashier();
+        GamingMachine gamingMachine = new GamingMachine(cashier);
         IPlayerCard playerCard = mock(IPlayerCard.class);
 
         //Act

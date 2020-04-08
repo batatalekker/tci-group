@@ -6,9 +6,8 @@ import casino.game.Game;
 import casino.game.IGame;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Casino implements ICasino{
+public class Casino implements ICasino {
     ArrayList<Game> games;
 
     public Casino() {
