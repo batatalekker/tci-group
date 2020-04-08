@@ -33,12 +33,18 @@ public class Cashier implements ICashier {
 
     @Override
     public boolean checkIfBetIsValid(IPlayerCard card, Bet betToCheck) throws BetNotExceptedException {
-        for(BetID betID:card.returnBetIDs()){
-            if(betToCheck.getBetID().equals(betID)){
-                return true;
-            }
+        MoneyAmount cardAmount = ((PlayerCard)card).getBalance();
+        MoneyAmount betAmount = betToCheck.getMoneyAmount();
+
+        if (cardAmount.getAmountInCents() < 0) {
+            throw new BetNotExceptedException("Invalid amount on card");
         }
-        return false;
+        else if (cardAmount.getAmountInCents() < betAmount.getAmountInCents()) {
+            throw new BetNotExceptedException("Not enough money on card");
+        }
+        else {
+            return true;
+        }
     }
 
     @Override

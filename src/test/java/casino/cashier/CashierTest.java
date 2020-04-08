@@ -52,8 +52,8 @@ public class CashierTest {
     public void checkIfBetIsValidShouldThrowExceptionWhenInvalidBet(MoneyAmount invalidMoneyAmountOnCard) throws BetNotExceptedException {
         //arrange
         Cashier cashier = new Cashier();
-        PlayerCard card = mock(PlayerCard.class);
-        card.setBalance(invalidMoneyAmountOnCard);
+        PlayerCard card = new PlayerCard();
+        card.setBalance(invalidMoneyAmountOnCard); //indirect input here
         Bet bet = new Bet(VALID_BETID, VALID_MONEY);
 
         //act
