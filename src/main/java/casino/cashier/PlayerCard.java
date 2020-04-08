@@ -16,7 +16,7 @@ public class PlayerCard implements IPlayerCard {
     public PlayerCard(){
         betIds = new HashSet<>();
         this.cardID = new CardID(IDFactory.GenerateID("PlayerCard"));
-        balance = new MoneyAmount(0);
+        this.balance = new MoneyAmount(0);
     }
 
     public MoneyAmount getBalance() {
@@ -34,11 +34,11 @@ public class PlayerCard implements IPlayerCard {
 
     @Override
     public Set<BetID> returnBetIDsAndClearCard() {
-        Set<BetID> temp=new HashSet<>();
-        for(BetID id:this.betIds){
+        Set<BetID> temp = new HashSet<>();
+        for(BetID id : this.betIds){
             temp.add(id);
         }
-        this.betIds=new HashSet<>();
+        this.betIds =new HashSet<>();
         return temp;
     }
 
