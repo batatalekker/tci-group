@@ -8,8 +8,8 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(JUnitParamsRunner.class)
 public class CashierTest {
@@ -20,6 +20,10 @@ public class CashierTest {
 
     private static final Object[] getInvalidMoney() {
         return new Object[] [] {{ new MoneyAmount(-50) }};
+    }
+
+    private static final Object[] getValidMoney() {
+        return new Object[] [] {{new MoneyAmount( 300)}};
     }
 
     @Test
@@ -47,13 +51,31 @@ public class CashierTest {
         assertEquals(0, cashier.getPlayercards().size());
     }
 
+    //Implemented by Joe
+    //Tests indirect output
+    @Test
+    public void returnGamblerCardShouldLeaveCardWithNoMoney() {
+        //arrange
+        Cashier cashier = new Cashier();
+        PlayerCard playerCard = (PlayerCard) cashier.distributeGamblerCard();
+        playerCard.setBalance(new MoneyAmount(200));
+
+        //act
+        cashier.returnGamblerCard(playerCard);
+
+        //assert
+        assertEquals(0, playerCard.getBalance().getAmountInCents());
+    }
+
+    //Implemented by Joe
+    //
     @Test(expected = BetNotExceptedException.class)
     @Parameters(method = "getInvalidMoney")
     public void checkIfBetIsValidShouldThrowExceptionWhenInvalidBet(MoneyAmount invalidMoneyAmountOnCard) throws BetNotExceptedException {
         //arrange
         Cashier cashier = new Cashier();
         PlayerCard card = new PlayerCard();
-        card.setBalance(invalidMoneyAmountOnCard); //indirect input here
+        card.setBalance(invalidMoneyAmountOnCard);
         Bet bet = new Bet(VALID_BETID, VALID_MONEY);
 
         //act
@@ -68,17 +90,20 @@ public class CashierTest {
 
     }
 
+
+    //Implemented by Joe
+    //validates indirect output
     @Test
-    public void addAmount() {
+    @Parameters(method = "getValidMoney")
+    public void addAmountShouldAddAmountToCardBalance(MoneyAmount moneyAmount) {
         //arrange
         Cashier cashier = new Cashier();
         PlayerCard playerCard = (PlayerCard) cashier.distributeGamblerCard();
-        MoneyAmount moneyAmount = new MoneyAmount(500);
 
         //act
         cashier.addAmount(playerCard, moneyAmount);
 
         //assert
-//        assertEquals(moneyAmount,playerCard.getBalance());
+        assertEquals(moneyAmount.getAmountInCents(), playerCard.getBalance().getAmountInCents());
     }
 }

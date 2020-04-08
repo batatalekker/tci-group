@@ -9,14 +9,15 @@ import java.util.Set;
 
 public class Cashier implements ICashier {
     private Set<IPlayerCard> playercards;
+    private Set<BetID> betIDS;
 
     public Set<IPlayerCard> getPlayercards() {
         return playercards;
     }
 
-    public Cashier(){
+    public Cashier() {
         this.playercards = new HashSet<>();
-
+        this.betIDS = new HashSet<>();
     }
 
     @Override
@@ -43,6 +44,7 @@ public class Cashier implements ICashier {
             throw new BetNotExceptedException("Not enough money on card");
         }
         else {
+            ((PlayerCard) card).setBalance(new MoneyAmount(cardAmount.getAmountInCents() - betAmount.getAmountInCents()));
             return true;
         }
     }
